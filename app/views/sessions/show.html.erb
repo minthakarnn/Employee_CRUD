@@ -1,0 +1,9 @@
+<h1>Session Details</h1>
+
+<% if @user_session %>
+  <p>ID: <%= @user_session.id %></p>
+  <p>User ID: <%= @user_session.user_id %></p>
+  <!-- แสดงข้อมูลอื่นๆ ตามต้องการ -->
+<% else %>
+  <p>No session details available.</p>
+<% end %>

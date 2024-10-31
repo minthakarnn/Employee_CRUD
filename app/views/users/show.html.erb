@@ -1,0 +1,7 @@
+<%= content_tag :h1, current_user.welcome %>
+<% if @user %>
+  <p>Email: <%= @user.email %></p>
+<% else %>
+  <p>No user details available.</p>
+<% end %>
+<%= link_to "Sign out", user_path, method:"delete" %>
