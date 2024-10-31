@@ -1,4 +1,4 @@
-<div class="flex-column" style = "height: auto;">
+<div class="flex-column set-center" style = "height: auto;">
   <h1> Employees </h1>
   <!--Error Message-->
   <% if flash[:errors] %>
@@ -16,9 +16,9 @@
           <td class="text-center"> Hobbies </td>
           <td colspan=3 class="text-center"> Action </td>
         </thead>
-        <% @employees.each do |e| %>
+        <% @employees.each_with_index do |e, index| %>
           <tr>
-            <td class="text-center"> <%= e.id %> </td>
+            <td class="text-center"><%= index + 1 %></td>
             <td class="text-center"> <%= link_to e.employee_name, employee_path(e) %> </td>
             <td class="text-center"> <%= e.hobbies %> </td>
             <td class="text-center"><%= button_to "Show",employee_path(e),method: :get, class:"btn-success border-0 rounded-pill shadow px-3 py-2" %></td>
