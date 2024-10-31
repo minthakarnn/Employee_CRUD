@@ -11,7 +11,7 @@
         <% end %>
       <% end %>
       <!-- Form Started Here -->
-      <%= form_with model: @employee do |f| %>
+      <%= form_with model: @employee, html: { class: 'create_success' } do |f| %>
         <%= f.label :employee_name, "Employee Name :", class:"mt-3" %>
         <%= f.text_field :employee_name ,placeholder: "Enter Employee's Name",class:"mb-2 form-control" %>
         <br>

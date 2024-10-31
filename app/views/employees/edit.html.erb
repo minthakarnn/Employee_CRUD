@@ -11,7 +11,7 @@
         <% end %>
       <% end %>
       <!-- Form Started Here -->
-      <%= form_with model: @employee do |f| %>
+      <%= form_with model: @employee, html: { class: 'edit_alert' } do |f| %>
         <%= f.label :employee_name, "Employee Name :", class:"mt-3" %>
         <%= f.text_field :employee_name ,placeholder: "Enter Employee's Name",class:"mb-2 form-control" %>
         <br>
@@ -35,7 +35,7 @@
           <%= f.label :hobbies, "Travelling" %>
         </div>
         <br>
-        <%= f.submit "Save Employee", class:"btn-primary border-0 rounded-pill shadow p-3" , form_class:"create_success" %>
+        <%= f.submit "Save Employee", class:"btn-primary border-0 rounded-pill shadow p-3" %>
       <% end %>
     </div>
   </div>
