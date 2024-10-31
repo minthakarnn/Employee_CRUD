@@ -5,7 +5,7 @@ window.addEventListener('turbo:load', () => {
 
       Swal.fire({
         title: "Good job!",
-        text: "Add new employee success",
+        text: "Add new employee create_success",
         icon: "success",
         timer: 2000, // ตั้งเวลาให้แสดง SweetAlert เป็นเวลา 2 วินาที
         showConfirmButton: false // ไม่แสดงปุ่มยืนยัน
