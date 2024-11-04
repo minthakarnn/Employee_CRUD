@@ -1,3 +1,5 @@
+<div id="employee-data" data-employees-url="<%= employees_path(format: :json) %>"></div>
+
 <div class="flex-column set-center" style="height: auto;">
   <h1> Employees </h1>
   <% if session[:user_id] %>
@@ -12,20 +14,27 @@
   <% end %>
 
   <!-- Employee Table -->
-  <div id="employee-table" data-employees-url="<%= employees_path(format: :json) %>">
-    <table class="table table-info table-striped fs-5">
-      <thead class="table-secondary">
+<div>
+  <table id="employee-table" class="table table-info table-striped fs-5">
+    <thead class="table-secondary">
+      <tr>
+        <th class="text-center">Id</th>
+        <th class="text-center">Name</th>
+        <th class="text-center">Hobbies</th>
+        <th class="text-center" colspan="3">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @employees.each_with_index do |employee, index| %>
         <tr>
-          <th class="text-center">Id</th>
-          <th class="text-center">Name</th>
-          <th class="text-center">Hobbies</th>
-          <th class="text-center" colspan="3">Actions</th>
+          <td class="text-center"><%= employee.id %></td> <!-- เปลี่ยนจาก index + 1 เป็น employee.id -->
+          <td class="text-center"><%= employee.employee_name %></td>
+          <td class="text-center"><%= Array(employee.hobbies).join(", ") %></td>
+          <td class="text-center"><%= button_to "Show", employee_path(employee), method: :get, class: "btn-success" %></td>
+          <td class="text-center"><%= button_to "Edit", edit_employee_path(employee), method: :get, class: "btn-primary" %></td>
+          <td class="text-center"><%= button_to "Delete", employee_path(employee), method: :delete, class: "btn-danger" %></td>
         </tr>
-      </thead>
-      <tbody>
-        <!-- จะถูกเติมข้อมูลโดย JavaScript -->
-      </tbody>
-    </table>
-  </div>
+      <% end %>
+    </tbody>
+  </table>
 </div>
-
