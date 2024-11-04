@@ -1,41 +1,31 @@
 <div class="flex-column set-center" style="height: auto;">
   <h1> Employees </h1>
   <% if session[:user_id] %>
-    <%= link_to "Sign out", session_path(:id => "sign_out"), method: :delete, data: { confirm: "Are you sure?" } %>
+    <%= link_to "Sign out", session_path(id: "sign_out"), method: :delete, data: { confirm: "Are you sure?" } %>
   <% end %>
 
-  <!--Error Message-->
+  <!-- Error Message -->
   <% if flash[:errors] %>
     <% flash.each do |name, message| %>
       <p class="text-danger"><%= message %></p>
     <% end %>
   <% end %>
+
   <!-- Employee Table -->
-  <div>
+  <div id="employee-table" data-employees-url="<%= employees_path(format: :json) %>">
     <table class="table table-info table-striped fs-5">
       <thead class="table-secondary">
         <tr>
           <th class="text-center">Id</th>
           <th class="text-center">Name</th>
           <th class="text-center">Hobbies</th>
-          <th colspan="3" class="text-center">Action</th>
+          <th class="text-center" colspan="3">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <% @employees.each_with_index do |e, index| %>
-          <tr>
-            <td class="text-center"><%= index + 1 %></td>
-            <td class="text-center"><%= link_to e.employee_name, employee_path(e) %></td>
-            <td class="text-center"><%= e.hobbies %></td>
-            <td class="text-center"><%= button_to "Show", employee_path(e), method: :get, class: "btn-success border-0 rounded-pill shadow px-3 py-2" %></td>
-            <td class="text-center"><%= button_to "Edit", edit_employee_path(e), method: :get, class: "btn-primary border-0 rounded-pill shadow px-3 py-2" %></td>
-            <td class="text-center"><%= button_to "Delete", employee_path(e), method: :delete, class: "btn-danger border-0 rounded-pill shadow px-3 py-2", form_class: 'delete-alertbox' %></td>
-          </tr>
-        <% end %>
+        <!-- จะถูกเติมข้อมูลโดย JavaScript -->
       </tbody>
     </table>
   </div>
-  <div class="d-flex">
-    <%= button_to "Add New Employee", new_employee_path, method: :get, class: "btn-warning border-0 rounded-pill shadow p-3 m-3" %>
-  </div>
 </div>
+
