@@ -2,6 +2,7 @@
 
 <div class="flex-column set-center" style="height: auto;">
   <h1> Employees </h1>
+
   <% if session[:user_id] %>
     <%= link_to "Sign out", session_path(id: "sign_out"), method: :delete, data: { confirm: "Are you sure?" } %>
   <% end %>
@@ -13,28 +14,34 @@
     <% end %>
   <% end %>
 
+  <!-- View as JSON Button -->
+  <div class="my-3">
+    <%= link_to "View as JSON", employees_path(format: :json), target: "_blank", class: "btn btn-primary" %>
+  </div>
+
   <!-- Employee Table -->
-<div>
-  <table id="employee-table" class="table table-info table-striped fs-5">
-    <thead class="table-secondary">
-      <tr>
-        <th class="text-center">Id</th>
-        <th class="text-center">Name</th>
-        <th class="text-center">Hobbies</th>
-        <th class="text-center" colspan="3">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @employees.each_with_index do |employee, index| %>
+  <div>
+    <table id="employee-table" class="table table-info table-striped fs-5">
+      <thead class="table-secondary">
         <tr>
-          <td class="text-center"><%= employee.id %></td> <!-- เปลี่ยนจาก index + 1 เป็น employee.id -->
-          <td class="text-center"><%= employee.employee_name %></td>
-          <td class="text-center"><%= Array(employee.hobbies).join(", ") %></td>
-          <td class="text-center"><%= button_to "Show", employee_path(employee), method: :get, class: "btn-success" %></td>
-          <td class="text-center"><%= button_to "Edit", edit_employee_path(employee), method: :get, class: "btn-primary" %></td>
-          <td class="text-center"><%= button_to "Delete", employee_path(employee), method: :delete, class: "btn-danger" %></td>
+          <th class="text-center">Id</th>
+          <th class="text-center">Name</th>
+          <th class="text-center">Hobbies</th>
+          <th class="text-center" colspan="3">Actions</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @employees.each_with_index do |employee, index| %>
+          <tr>
+            <td class="text-center"><%= index+1 %></td>
+            <td class="text-center"><%= employee.employee_name %></td>
+            <td class="text-center"><%= Array(employee.hobbies).join(", ") %></td>
+            <td class="text-center"><%= button_to "Show", employee_path(employee), method: :get, class: "btn-success" %></td>
+            <td class="text-center"><%= button_to "Edit", edit_employee_path(employee), method: :get, class: "btn-primary" %></td>
+            <td class="text-center"><%= button_to "Delete", employee_path(employee), method: :delete, class: "btn-danger" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

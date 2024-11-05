@@ -3,9 +3,10 @@ class EmployeesController < ApplicationController
 
   def index
     @employees = Employee.all
+
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @employees.as_json(include: []) } # ส่งข้อมูล JSON
+      format.json # index.json.jbuilder
     end
   end
 
@@ -16,29 +17,50 @@ class EmployeesController < ApplicationController
   def create
     @employee = Employee.new(employee_params)
     if @employee.save
-      redirect_to employees_path
+      respond_to do |format|
+        format.html { redirect_to @employee }
+        format.json { render :show, status: :created } # ใช้ show.json.jbuilder
+      end
     else
-      flash[:errors] = @employee.errors.full_messages
-      render :new
+      respond_to do |format|
+        format.html { render :new }
+        format.json { render json: @employee.errors, status: :unprocessable_entity }
+      end
     end
   end
 
-  def show; end
+  def show
+    @employee = Employee.find(params[:id])
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json # จะทำให้ Rails เรียก show.json.jbuilder
+    end
+  end
 
   def edit; end
 
-  def update
-    if @employee.update(employee_params)
-      redirect_to employee_path(@employee)
-    else
-      flash[:errors] = @employee.errors.full_messages
-      render :edit
+def update
+  @employee = Employee.find(params[:id])
+  if @employee.update(employee_params)
+    respond_to do |format|
+      format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
+      format.json { render :show, status: :ok } # ใช้ show.json.jbuilder
+    end
+  else
+    respond_to do |format|
+      format.html { render :edit }
+      format.json { render json: @employee.errors, status: :unprocessable_entity }
     end
   end
+end
 
   def destroy
+    @employee = Employee.find(params[:id])
     @employee.destroy
-    redirect_to employees_path
+    respond_to do |format|
+      format.html { redirect_to employees_url }
+      format.json { head :no_content }
+    end
   end
 
   private
@@ -55,7 +77,7 @@ class EmployeesController < ApplicationController
   end
 
   def employee_params
-    params.require(:employee).permit(:employee_name, :hobbies)
+    params.require(:employee).permit(:employee_name, :gender, hobbies: [])
   end
 
   def set_current_user_session
