@@ -1,6 +1,4 @@
-<!-- Employee Details Showing -->
 <div class="flex-column set-center" style="height:100vh;">
-  <!-- Error Message -->
   <% if flash[:errors] %>
     <% flash.each do |name, message| %>
       <p class="text-danger"><%= message %></p>
@@ -14,10 +12,14 @@
           <h2 class="text-center">Employee's Details</h2>
         </div>
         <div class="card-body">
-          <h2>&#10145; ID: <%= @employee.id %> </h2>
-          <h2>&#10145; Name: <%= @employee.employee_name %> </h2>
-          <h2>&#10145; Gender: <%= @employee.gender %> </h2>
-          <h2>&#10145; Hobbies: <%= Array(@employee.hobbies).join(", ") %> </h2>
+          <% if @employee %>
+            <h2>&#10145; ID: <%= @employee.id %> </h2>
+            <h2>&#10145; Name: <%= @employee.employee_name %> </h2>
+            <h2>&#10145; Gender: <%= @employee.gender %> </h2>
+            <h2>&#10145; Hobbies: <%= Array(@employee.hobbies).join(", ") %> </h2>
+          <% else %>
+            <p class="text-danger">No employee found.</p>
+          <% end %>
         </div>
         <div class="d-flex justify-content-center">
           <%= button_to "Edit Employee", edit_employee_path(@employee), method: :get, class: "btn-success border-0 rounded-pill shadow p-2 m-2" %>

@@ -58,7 +58,7 @@ end
     @employee = Employee.find(params[:id])
     @employee.destroy
     respond_to do |format|
-      format.html { redirect_to employees_url }
+      format.html { redirect_to employees_path, notice: 'Employee was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
