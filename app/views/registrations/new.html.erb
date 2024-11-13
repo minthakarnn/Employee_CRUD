@@ -1,6 +1,6 @@
-<div class="text-center">
+<div class="text-center ">
+  <div class="container mt-5">
   <h1>Registration</h1>
-
   <%= form_with(model: @user, url: registrations_path, local: true) do |f| %>
 
     <!-- Display error message of form -->
@@ -14,24 +14,27 @@
       </div>
     <% end %>
 
-    <!-- Field of registration form -->
-    <div class='mb-3'>
-      <%= f.label :email, class: 'form-label' %>
-      <%= f.text_field :email, placeholder: 'Please enter email id', class: 'form-control' %>
-    </div>
+    <div class="card p-4 shadow">
+      <div class='mb-3'>
+        <%= f.label :email, class: 'form-label' %>
+        <%= f.text_field :email, placeholder: 'Please enter email id', class: 'form-control' %>
+      </div>
 
-    <div class='mb-3'>
-      <%= f.label :password, class: 'form-label' %>
-      <%= f.password_field :password, placeholder: 'Please enter password', class: 'form-control' %>
-    </div>
+      <div class='mb-3'>
+        <%= f.label :password, class: 'form-label' %>
+        <%= f.password_field :password, placeholder: 'Please enter password', class: 'form-control' %>
+      </div>
 
-    <div class='mb-3'>
-      <%= f.label :password_confirmation, class: 'form-label' %>
-      <%= f.password_field :password_confirmation, placeholder: 'Please enter password confirmation', class: 'form-control' %>
-    </div>
+      <div class='mb-3'>
+        <%= f.label :password_confirmation, class: 'form-label' %>
+        <%= f.password_field :password_confirmation, placeholder: 'Please enter password confirmation', class: 'form-control' %>
+      </div>
 
-    <div class='text-center'>
-      <%= f.submit 'Sign Up', class: 'btn btn-primary' %>
+      <div class='text-center'>
+        <%= f.submit 'Sign Up', class: 'btn btn-primary' %>
+      </div>
+ 
     </div>
-  <% end %>
+    <% end %>
+</div>
 </div>
