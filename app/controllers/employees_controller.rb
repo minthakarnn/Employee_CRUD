@@ -56,10 +56,10 @@ end
 
   def destroy
     @employee = Employee.find(params[:id])
-    @employee.destroy
-    respond_to do |format|
-      format.html { redirect_to employees_path, notice: 'Employee was successfully destroyed.' }
-      format.json { head :no_content }
+    if @employee.destroy
+      head :no_content
+    else
+      render json: { error: 'Failed to delete employee' }, status: :unprocessable_entity
     end
   end
 
