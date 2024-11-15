@@ -4,7 +4,6 @@ document.addEventListener("turbo:load", () => {
     function fetchEmployeeData() {
         const employeeDataElement = document.getElementById("employee-data");
         if (!employeeDataElement) {
-            console.error("Element with id 'employee-data' not found");
             return; // ออกจากฟังก์ชันถ้าไม่พบองค์ประกอบ
         }
 
@@ -19,32 +18,34 @@ document.addEventListener("turbo:load", () => {
     }
 
     function renderEmployeeTable(employees) {
-        const tableBody = document.querySelector("#employee-table tbody");
-        tableBody.innerHTML = ''; // เคลียร์ข้อมูลเก่าก่อน
+    const tableBody = document.querySelector("#employee-table tbody");
+    tableBody.innerHTML = ''; // เคลียร์ข้อมูลเก่าก่อน
 
-        if (employees.length === 0) {
-            const row = tableBody.insertRow();
-            const cell = row.insertCell(0);
-            cell.colSpan = 4; // เพิ่มจำนวนคอลัมน์ที่ต้องการให้ขยาย
-            cell.className = "text-center"; // ตั้งค่าคลาสให้กลาง
-            cell.textContent = "No employees found"; // แสดงข้อความถ้าไม่มีข้อมูล
-            return;
-        }
-
-        employees.forEach((employee, index) => {
-            const row = tableBody.insertRow(); // สร้างแถวใหม่
-            row.innerHTML = `
-                <td class="text-center">${index + 1}</td>
-                <td class="text-center">${employee.employee_name}</td>
-                <td class="text-center">${employee.hobbies.join(", ")}</td>
-                <td class="text-center">
-                    <button class="btn-success" onclick="showEmployee(${employee.id})">Show</button>
-                    <button class="btn-primary" onclick="editEmployee(${employee.id})">Edit</button>
-                    <button class="btn-danger" onclick="deleteEmployee(${employee.id})">Delete</button>
-                </td>
-            `;
-        });
+    if (employees.length === 0) {
+        const row = tableBody.insertRow();
+        const cell = row.insertCell(0);
+        cell.colSpan = 4; // ปรับ colspan ให้ครอบคลุมทุกคอลัมน์
+        cell.className = "text-center";
+        cell.textContent = "No employees found"; // แสดงข้อความถ้าไม่มีข้อมูล
+        return;
     }
+
+    employees.forEach((employee, index) => {
+        const row = tableBody.insertRow();
+        const uniqueHobbies = [...new Set(employee.hobbies)]; // ลบ hobbies ที่ซ้ำ
+
+        row.innerHTML = `
+            <td class="text-center">${index + 1}</td>
+            <td class="text-center">${employee.employee_name}</td>
+            <td class="text-center">${uniqueHobbies.join(", ")}</td>
+            <td class="text-center">
+                <button class="btn-success" onclick="showEmployee(${employee.id})">Show</button>
+                <button class="btn-primary" onclick="editEmployee(${employee.id})">Edit</button>
+                <button class="btn-danger" onclick="deleteEmployee(${employee.id})">Delete</button>
+            </td>
+        `;
+    });
+}
 
     // ฟังก์ชันจัดการปุ่ม
     window.showEmployee = function(id) {

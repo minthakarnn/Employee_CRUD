@@ -1,5 +1,6 @@
 class EmployeesController < ApplicationController
   before_action :require_login, :set_current_user_session, :set_employee_params, only: %i[show edit update destroy]
+  
 
   def index
     @employees = Employee.all

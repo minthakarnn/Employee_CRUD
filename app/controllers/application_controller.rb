@@ -1,10 +1,12 @@
-# app/controllers/application_controller.rb
 class ApplicationController < ActionController::Base
   before_action :require_login
   helper_method :current_user, :current_user_session
 
   def require_login
-    redirect_to new_session_path unless session.include?(:user_id)
+    # ถ้าไม่ได้ล็อกอิน และกำลังเข้าถึงหน้าอื่นที่ไม่ใช่หน้า index ของ employees
+    if !session[:user_id] && controller_name != 'employees' && action_name != 'index'
+      redirect_to new_session_path
+    end
   end
 
   def current_user

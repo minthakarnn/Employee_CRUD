@@ -1,4 +1,3 @@
-# app/views/employees/show.json.jbuilder
 json.id @employee.id
 json.employee_name @employee.employee_name
 json.hobbies @employee.hobbies.split(", ") if @employee.hobbies.present?
