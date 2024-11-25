@@ -1,5 +1,4 @@
 class Employee < ApplicationRecord
-  before_save :remove_duplicate_hobbies
   before_create :check_existing_employee
 
   def check_existing_employee

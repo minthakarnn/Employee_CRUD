@@ -1,30 +1,33 @@
-<div class="flex-column set-center" style="height:100vh;">
-  <% if flash[:errors] %>
-    <% flash.each do |name, message| %>
-      <p class="text-danger"><%= message %></p>
-    <% end %>
-  <% end %>
+<div ng-controller="EmployeeShowController">
+  <div id="employee-data" data-employees-url="<%= employee_path(@employee.id) %>"></div>
+  <div class="flex-column set-center" style="height:100vh;">
+    <!-- แสดงข้อความผิดพลาด -->
+    <div ng-if="errors.length">
+      <div ng-repeat="error in errors">
+        <p class="text-danger">{{ error }}</p>
+      </div>
+    </div>
 
-  <div class="d-flex">
-    <div class="m-5">
-      <div class="card bg-light border-warning shadow">
-        <div class="card-header">
-          <h2 class="text-center">Employee's Details</h2>
-        </div>
-        <div class="card-body">
-          <% if @employee %>
-            <h2>&#10145; ID: <%= @employee.id %> </h2>
-            <h2>&#10145; Name: <%= @employee.employee_name %> </h2>
-            <h2>&#10145; Gender: <%= @employee.gender %> </h2>
-            <h2>&#10145; Hobbies: <%= Array(@employee.hobbies).join(", ") %> </h2>
-          <% else %>
+    <div class="d-flex">
+      <div class="m-5">
+        <div class="card bg-light border-warning shadow">
+          <div class="card-header">
+            <h2 class="text-center">Employee's Details</h2>
+          </div>
+          <div class="card-body" ng-if="employee">
+            <h2>&#10145; ID: {{ employee.id }} </h2>
+            <h2>&#10145; Name: {{ employee.employee_name }} </h2>
+            <h2>&#10145; Gender: {{ employee.gender }} </h2>
+            <h2>&#10145; Hobbies: {{ employee.hobbies.join(", ") }} </h2>
+          </div>
+          <div ng-if="!employee">
             <p class="text-danger">No employee found.</p>
-          <% end %>
-        </div>
-        <div class="d-flex justify-content-center">
-          <%= button_to "Edit Employee", edit_employee_path(@employee), method: :get, class: "btn-success border-0 rounded-pill shadow p-2 m-2" %>
-          <%= button_to "Delete Employee", @employee, method: :delete, data: { confirm: "Are you sure?" }, class: "btn-danger border-0 rounded-pill shadow p-2 m-2" %>
-          <%= button_to "View All Employees", employees_path, method: :get, class: "btn-primary border-0 rounded-pill shadow p-2 m-2" %>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button ng-click="editEmployee(employee.id)" class="btn-success">Edit Employee</button>
+            <button ng-click="deleteEmployee(employee.id)" class="btn-danger">Delete Employee</button>
+            <button ng-click="viewAllEmployees()" class="btn-primary">View All Employees</button>
+          </div>
         </div>
       </div>
     </div>
