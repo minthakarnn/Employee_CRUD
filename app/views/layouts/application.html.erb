@@ -10,8 +10,18 @@
   <link rel="apple-touch-icon" href="/icon.png">
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <%# <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script> %>
   <%= javascript_importmap_tags %> <!-- สำหรับการโหลด importmap -->
+  <%# <script src="/js/appConfig.js"></script> %>
+
+  <!-- รวมไฟล์ controllers -->
+  <%# <script src="/js/employee_controller.js"></script>
+  <script src="/js/employee_show_controller.js"></script>
+  <script src="/js/employee_form_controller.js"></script>
+  <script src="/js/employee_edit_controller.js"></script> %>
+  <%# ลองเปลี่ยนเป็นแยกไฟล์แล้วเรียกใช้ไฟล์ทุกอันแต่ไม่สามารถทำงานได้ %>
 </head>
+
 <body ng-app="myApp">
   <%= yield %>
   <%= javascript_include_tag "delete_confirmation_dialog" %>
@@ -24,5 +34,4 @@
   
   <!-- รวมไฟล์ JavaScript ของ AngularJS -->
   <script src="/js/index_employees.controller.js"></script>
-</body>
 </html>
