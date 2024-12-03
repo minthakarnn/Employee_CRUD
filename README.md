@@ -1,19 +1,14 @@
-Tracking.find_by(code: "TH04026DH83P5A0").order.to_3pl_process!
-Tracking.find_by(code: "TH04026DH83P5A0").order.force_completed!
-Tracking.find_by(code: "TH24026EKA4N6C").order.to_3pl_process!
-Tracking.find_by(code: "TH24026EKA4N6C").order.force_completed!
-Tracking.find_by(code: "TH29036EMJ7P1A").order.to_3pl_process!
-Tracking.find_by(code: "TH29036EMJ7P1A").order.force_completed!
+Tracking.find_by(code: "TH23016EY8Y08H").order.to_3pl_process!
+Tracking.find_by(code: "TH23016EY8Y08H").order.force_completed!
+Tracking.find_by(code: "TH29026EVRPB5F").order.to_3pl_process!
+Tracking.find_by(code: "TH29026EVRPB5F").order.force_completed!
+Tracking.find_by(code: "TH70016E9QNS5B").order.to_3pl_process!
+Tracking.find_by(code: "TH70016E9QNS5B").order.force_completed!
 
-Tracking.find_by(code: "TH04026DH83P5A0").order
-Tracking.find_by(code: "TH24026EKA4N6C").order
-Tracking.find_by(code: "TH29036EMJ7P1A").order
+Tracking.find_by(code: "TH23016EY8Y08H").order
+Tracking.find_by(code: "TH29026EVRPB5F").order
+Tracking.find_by(code: "TH70016E9QNS5B").order
 
-
-
-TH04026DH83P5A0
-TH24026EKA4N6C
-TH29036EMJ7P1A
-
-
-
+TH23016EY8Y08H
+TH29026EVRPB5F
+TH70016E9QNS5B

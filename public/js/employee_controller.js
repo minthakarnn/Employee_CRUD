@@ -1,9 +1,5 @@
 angular.module('myApp', [])
-  .controller('EmployeeController', ['$scope', '$http', '$window', '$controller', function($scope, $http, $window, $controller) {
-    console.log("EmployeeController is loaded");
-
-    // ใช้ $controller เพื่อลองโหลดใหม่
-    var ctrl = $controller('EmployeeController', { $scope: $scope });
+  .controller('EmployeeController', function($scope, $http, $window) {
     const employeeDataElement = document.getElementById("employee-data");
     const url = employeeDataElement ? employeeDataElement.dataset.employeesUrl : '';
     
@@ -56,4 +52,4 @@ angular.module('myApp', [])
         window.location.href = '/sessions/new';
       });
     };
-  }])
+  })
