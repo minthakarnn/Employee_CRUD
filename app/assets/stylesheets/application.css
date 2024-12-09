@@ -19,3 +19,92 @@
   justify-content: center;
   align-items: center;
 }
+
+/* เพิ่มภาพพื้นหลัง */
+body {
+  background-size: cover; /* ครอบคลุมทั้งหน้า */
+  background-position: center center; /* จัดตำแหน่งภาพให้ตรงกลาง */
+  background-attachment: fixed; /* ทำให้ภาพคงที่เมื่อเลื่อนหน้า */
+}
+
+/* กำหนดพื้นหลังโปร่งใสให้กับ container ของตาราง */
+.p-4.rounded.shadow-lg {
+  background-color: rgba(255, 255, 255, 0.85); /* สีขาวโปร่งใส */
+}
+.container-table {
+  max-width: 900px; /* กำหนดความกว้างสูงสุดของตาราง */
+  margin: 0 auto; /* จัดให้อยู่ตรงกลาง */
+}
+
+#employee-table th, 
+#employee-table td {
+  padding: 0.75rem; /* ลดขนาด Padding เพื่อความกระชับ */
+}
+
+h1 {
+  font-size: 1.75rem; /* ลดขนาดหัวข้อ */
+}
+
+.table-responsive {
+  overflow-x: auto; /* ให้เลื่อนแนวนอนได้เมื่อหน้าจอแคบ */
+  max-height: 750px; /* กำหนดความสูงสูงสุด */
+  overflow-y: auto; /* เปิดการเลื่อนในแนวตั้ง */
+  border: 1px solid #ddd; /* เส้นขอบสำหรับเน้น */
+}
+.button-group {
+  display: flex;
+  justify-content: space-between; /* แยกปุ่มออกให้ชิดซ้ายและขวา */
+  align-items: center; /* จัดให้อยู่กึ่งกลางในแนวตั้ง */
+  gap: 1rem; /* เพิ่มระยะห่างระหว่างปุ่ม */
+  margin-bottom: 1.5rem; /* เพิ่มพื้นที่ด้านล่าง */
+}
+
+.button-group .btn {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* เพิ่มเงา */
+  transition: transform 0.2s, box-shadow 0.2s; /* เพิ่มเอฟเฟกต์เมื่อ hover */
+}
+
+.button-group .btn:hover {
+  transform: scale(1.05); /* ขยายเล็กน้อยเมื่อชี้เมาส์ */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ปรับขนาดของ table ให้เต็มพื้นที่ */
+#employee-table {
+  width: 100%; /* ทำให้ตารางขยายเต็มที่ */
+  table-layout: fixed; /* กำหนดให้ขนาดของคอลัมน์คงที่ */
+}
+
+/* ลบช่องว่างที่ไม่จำเป็น */
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.main-content {
+  padding: 0; /* ลบ padding ที่ไม่จำเป็น */
+}
+
+/* ลดขนาดของ sidebar */
+.sidebar {
+    background: linear-gradient(to bottom, #007bff, #00b8ff); /* Gradient effect */
+    height: 100vh;
+    padding-top: 20px;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .nav-link {
+    color: black;
+  }
+  .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Hover effect */
+  }
+  .nav-item {
+    margin-bottom: 10px;
+  }
+  .sidebar .nav-link.active {
+    background-color: #0056b3; /* Highlight active link */
+    color: black;
+  }
+  .sidebar i {
+    margin-right: 10px; /* Spacing between icon and text */
+  }

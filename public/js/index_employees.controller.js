@@ -26,6 +26,12 @@ angular.module('myApp', [])
       console.log("Editing employee with ID:", id);
       window.location.href = `/employees/${id}/edit`;
     };
+    $scope.viewAllEmployees = function() {
+      window.location.href = "/employees";
+    };
+    $scope.dashboard = function() {
+      window.location.href = "/dashboard";
+    };
 
     $scope.deleteEmployee = function(id) {
       if (confirm("Are you sure you want to delete this employee?")) {
@@ -188,4 +194,6 @@ angular.module('myApp', [])
         window.location.href = '/employees/';
       });
     };
-  });
+  })
+  // app/javascript/controllers/dashboard_controller.js
+

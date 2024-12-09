@@ -1,0 +1,106 @@
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold text-uppercase" href="#">Employee</a>
+      <button class="btn btn-outline-light fw-bold" ng-click="logout()">
+        <i class="bi bi-box-arrow-right"></i> Logout
+      </button>
+    </div>
+  </nav>
+
+  <!-- Layout -->
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav class="col-md-3 col-lg-2 d-md-block bg-gradient shadow-lg sidebar">
+        <div class="position-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active text-white fw-bold" ng-click="dashboard()">
+                <i class="bi bi-house-door-fill"></i> index
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-black fw-bold" ng-click="viewAllEmployees()">
+                <i class="bi bi-people-fill"></i> Employees
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-black fw-bold" href="/settings">
+                <i class="bi bi-gear-fill"></i> Settings
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      
+      <!-- Main Content -->
+      <div class="col-md-9 ms-sm-auto col-lg-10 px-4">
+        <div class="container mt-4">
+          <h1 class="text-center">Employee Management Dashboard</h1>
+          
+          <div class="row mt-5">
+            <!-- สรุปข้อมูล -->
+            <div class="col-md-4">
+              <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total Employees</div>
+                <div class="card-body">
+                  <h5 class="card-title"><%= @total_employees %></h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card text-white bg-warning mb-3">
+                <div class="card-header">New Employees This Month</div>
+                <div class="card-body">
+                  <h5 class="card-title"><%= @new_employees %></h5>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ส่วนของ Chart -->
+          <div class="row mt-5">
+            <div class="col-md-12">
+              <canvas id="myChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script สำหรับแสดงกราฟ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const employeeGrowthData = <%= raw @employee_growth.to_json %>;
+
+      const months = Object.keys(employeeGrowthData);
+      const growthData = Object.values(employeeGrowthData);
+
+      const ctx = document.getElementById('myChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: months,
+          datasets: [{
+            label: 'Employee Growth',
+            data: growthData,
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

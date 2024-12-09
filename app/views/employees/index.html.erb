@@ -1,61 +1,87 @@
 <div ng-controller="EmployeeController">
   <div id="employee-data" data-employees-url="<%= employees_path(format: :json) %>"></div>
 
-  <h1 class="text-center my-4 text-uppercase text-decoration-underline fw-bold text-primary">Employees</h1>
+  <!-- Header -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold text-uppercase" href="#">Employee Management</a>
+      <button class="btn btn-outline-light fw-bold" ng-click="logout()">
+        <i class="bi bi-box-arrow-right"></i> Logout
+      </button>
+    </div>
+  </nav>
 
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <button class="btn btn-danger px-4 py-2 shadow-sm rounded-pill fw-bold me-2 ms-2" ng-click="logout()">
-      <i class="bi bi-box-arrow-right"></i> Log Out
-    </button>
-    <button type="button" 
-      class="btn px-4 py-2 shadow-sm rounded-pill fw-bold" 
-      ng-class="{
-        'btn-success': isAddButtonActive, 
-        'btn-outline-success': !isAddButtonActive,
-        'btn-lg': isLargeButtons,
-        'me-2': true,
-        'ms-2': true
-      }" 
-      onclick="window.location.href='/employees/new'">
-      <i class="bi bi-plus-circle"></i> Add Item
-    </button>
-  </div>
+  <!-- Layout -->
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav class="col-md-3 col-lg-2 d-md-block bg-gradient shadow-lg sidebar">
+        <div class="position-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link text-black fw-bold" ng-click="dashboard()">
+                <i class="bi bi-house-door-fill"></i> index
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active text-white fw-bold" ng-click="viewAllEmployees()">
+                <i class="bi bi-people-fill"></i> Employees
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-black fw-bold" href="/settings">
+                <i class="bi bi-gear-fill"></i> Settings
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
 
-  <div class="table-responsive shadow-sm rounded border" style="max-height: 600px; overflow-y: auto;">
-    <table id="employee-table" 
-      class="table table-hover align-middle bg-white rounded mb-0">
-      <thead class="bg-primary text-white text-uppercase fw-bold">
-        <tr>
-          <th class="text-center">#</th>
-          <th class="text-center">Name</th>
-          <th class="text-center">Hobbies</th>
-          <th class="text-center">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="employee in employees" class="border-bottom">
-          <td class="text-center fw-semibold text-primary">{{ $index + 1 }}</td>
-          <td class="text-center">{{ employee.employee_name }}</td>
-          <td class="text-center">{{ employee.hobbies.join(', ') }}</td>
-          <td class="text-center">
-            <div class="d-flex justify-content-center gap-2">
-              <button class="btn btn-sm btn-info text-white shadow-sm rounded-circle" ng-click="showEmployee(employee.id)">
-                <i class="bi bi-eye"></i>
-              </button>
-              <button class="btn btn-sm btn-primary shadow-sm rounded-circle" 
-                ng-if="!employee.employee_name.toLowerCase().startsWith('benz') && !employee.employee_name.toLowerCase().startsWith('test')" 
-                ng-click="editEmployee(employee.id)">
-                <i class="bi bi-pencil-square"></i>
-              </button>
-              <button class="btn btn-sm btn-danger shadow-sm rounded-circle" 
-                ng-if="!employee.employee_name.toLowerCase().startsWith('benz') && !employee.employee_name.toLowerCase().startsWith('test')" 
-                ng-click="deleteEmployee(employee.id)">
-                <i class="bi bi-trash-fill"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <!-- Main Content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-0">
+        <!-- Employee Table -->
+        <div class="table-responsive shadow-sm rounded border">
+          <table id="employee-table" class="table table-hover align-middle bg-white mb-0">
+            <thead class="bg-primary text-white text-uppercase fw-bold">
+              <!-- Add Item Row -->
+              <tr>
+                <th colspan="4" class="text-end bg-light">
+                  <button type="button" class="btn btn-success px-4 py-2 shadow-sm rounded-pill fw-bold" onclick="window.location.href='/employees/new'">
+                    <i class="bi bi-plus-circle"></i> Add Item
+                  </button>
+                </th>
+              </tr>
+              <!-- Actual Table Header -->
+              <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Hobbies</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="employee in employees" class="border-bottom">
+                <td class="text-center fw-semibold text-primary">{{ $index + 1 }}</td>
+                <td class="text-center">{{ employee.employee_name }}</td>
+                <td class="text-center">{{ employee.hobbies.join(', ') }}</td>
+                <td class="text-center">
+                  <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-sm btn-info text-white shadow-sm rounded-circle" ng-click="showEmployee(employee.id)">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-primary shadow-sm rounded-circle" ng-if="!employee.employee_name.toLowerCase().startsWith('benz') && !employee.employee_name.toLowerCase().startsWith('test')" ng-click="editEmployee(employee.id)">
+                      <i class="bi bi-pencil-square"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger shadow-sm rounded-circle" ng-if="!employee.employee_name.toLowerCase().startsWith('benz') && !employee.employee_name.toLowerCase().startsWith('test')" ng-click="deleteEmployee(employee.id)">
+                      <i class="bi bi-trash-fill"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
   </div>
 </div>
