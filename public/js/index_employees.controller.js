@@ -281,11 +281,11 @@ angular.module('myApp', [])
       $scope.createChart = function() {
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
-          type: 'bar',  // หรือ 'line', 'pie', ฯลฯ
+          type: 'line',  // หรือ 'line', 'pie', ฯลฯ
           data: {
             labels: $scope.months, // แท็กสำหรับแกน X
             datasets: [{
-              label: 'Employee Growth',
+              label: 'Employee count',
               data: $scope.growthData, // ข้อมูลสำหรับแกน Y
               backgroundColor: 'rgba(54, 162, 235, 0.6)', // สีของกราฟ
               borderColor: 'rgba(54, 162, 235, 1)', // สีของขอบกราฟ
@@ -293,12 +293,14 @@ angular.module('myApp', [])
             }]
           },
           options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true // Makes sure the y-axis starts at zero
             }
-          }
+          },
+        }
         });
       };
 
