@@ -85,14 +85,15 @@
         </div>
 
         <!-- Pagination Controls -->
-        <div class="pagination-controls text-center mt-3">
-          <button class="btn btn-outline-primary" ng-disabled="currentPage === 1" ng-click="currentPage = currentPage - 1">
-            Previous
-          </button>
-          <span>Page {{ currentPage }} of {{ totalPages() }}</span>
-          <button class="btn btn-outline-primary" ng-disabled="currentPage === totalPages()" ng-click="currentPage = currentPage + 1">
-            Next
-          </button>
+        <div class="d-flex justify-content-center align-items-center mt-3">
+        <button class="btn btn-outline-primary" ng-if="currentPage !== 1" ng-click="changePage('prev')">
+          Previous
+        </button>
+        <span class="mx-3">Page {{ currentPage }} of {{ totalPages() }}</span>
+        <button class="btn btn-outline-primary" ng-if="currentPage !== totalPages()" ng-click="changePage('next')">
+          Next
+        </button>
+      </div>
         </div>
       </main>
     </div>

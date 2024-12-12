@@ -62,7 +62,13 @@ angular.module('myApp', [])
     $scope.employees = [];
     $scope.currentPage = 1; // หน้าปัจจุบัน
     $scope.pageSize = 10;    // จำนวนรายการต่อหน้า
-
+    $scope.changePage = function(direction) {
+      if (direction === 'prev' && $scope.currentPage > 1) {
+        $scope.currentPage--;
+      } else if (direction === 'next' && $scope.currentPage < $scope.totalPages()) {
+        $scope.currentPage++;
+      }
+    };
     $scope.paginateEmployees = function() {
       const start = ($scope.currentPage - 1) * $scope.pageSize;
       return $scope.employees.slice(start, start + $scope.pageSize);
