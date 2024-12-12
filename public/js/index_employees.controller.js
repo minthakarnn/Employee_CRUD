@@ -9,7 +9,13 @@ angular.module('myApp', [])
     
     $scope.isLoading = true;
     $http.get(url).then(function(response) {
-      $scope.employees = response.data;
+      $scope.employees = response.data.map(function(employee) {
+        if (typeof employee.hobbies === 'string') {
+          // กรณีที่ hobbies เป็นสตริง ให้แยกค่าสตริงออกเป็นอาเรย์
+          employee.hobbies = employee.hobbies.replace(/[\[\]"]+/g, '').split(', ');
+        }
+        return employee;
+      });
       $scope.isLoading = false;
     }).catch(function(error) {
       console.error("Error loading data:", error);
