@@ -69,11 +69,21 @@ def set_employee
   @employee = Employee.find(params[:id]) unless params[:id] == 'new'
 end
 
-  def employee_params
-    hobbies = params[:employee][:hobbies]
-    params[:employee][:hobbies] = JSON.parse(hobbies) rescue [] if hobbies.is_a?(String)
-    params.require(:employee).permit(:employee_name, :gender, hobbies: [])
+def employee_params
+  hobbies = params[:employee][:hobbies]
+  
+  if hobbies.is_a?(String)
+    begin
+      # แปลง JSON String เป็น Array
+      params[:employee][:hobbies] = JSON.parse(hobbies)
+    rescue JSON::ParserError
+      # กรณีเป็น String ธรรมดา
+      params[:employee][:hobbies] = hobbies.split(',').map(&:strip)
+    end
   end
+
+  params.require(:employee).permit(:employee_name, :gender, :career, hobbies: [])
+end
 
   def set_current_user_session
     @current_user_session = current_user_session

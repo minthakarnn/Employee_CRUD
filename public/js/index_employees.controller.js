@@ -117,7 +117,8 @@ angular.module('myApp', [])
     $scope.employee = {
       employee_name: '',
       gender: '',
-      hobbies: []
+      hobbies: [],
+      career: ''
     };
     $scope.errors = [];
 
@@ -130,17 +131,49 @@ angular.module('myApp', [])
       }
     };
 
+    $scope.isSubmitting = false;
+
     $scope.saveEmployee = function() {
+      $scope.errors = [];
+
+      // Validation
+      if (!$scope.employee.employee_name.trim()) {
+        $scope.errors.push('Employee name is required.');
+      }
+      if (!$scope.employee.gender) {
+        $scope.errors.push('Gender is required.');
+      }
+      if (!$scope.employee.career.trim()) {
+        $scope.errors.push('Career is required.');
+      }
+
+      // หากมีข้อผิดพลาด ให้หยุดการทำงาน
+      if ($scope.errors.length > 0) {
+        return;
+      }
+
+      // ป้องกันการส่งซ้ำ
+      if ($scope.isSubmitting) return;
+      $scope.isSubmitting = true;
+
+      // ส่งข้อมูลไปยังเซิร์ฟเวอร์
       $http.post('/employees', $scope.employee)
         .then(function(response) {
           window.location.href = "/employees";
         })
         .catch(function(error) {
           console.error('Error saving employee:', error);
-          $scope.errors = error.data.errors || ['An unexpected error occurred.'];
+          if (error.status === 500) {
+            $scope.errors = ['Server error occurred. Please try again later.'];
+          } else {
+            $scope.errors = error.data.errors || ['An unexpected error occurred.'];
+          }
+        })
+        .finally(function() {
+          $scope.isSubmitting = false; // ปลดล็อกปุ่มส่ง
         });
     };
-  })
+})
   .controller('EmployeeEditFormController', function($scope, $http) {
     $scope.employee = { hobbies: [] };
     $scope.errors = [];
@@ -170,13 +203,18 @@ angular.module('myApp', [])
     }
 
     $scope.toggleHobby = function(hobby) {
-      var idx = $scope.employee.hobbies.indexOf(hobby);
-      if (idx > -1) {
-        $scope.employee.hobbies.splice(idx, 1);
-      } else {
-        $scope.employee.hobbies.push(hobby);
-      }
-    };
+  const index = $scope.employee.hobbies.indexOf(hobby);
+  if (index > -1) {
+    $scope.employee.hobbies.splice(index, 1);
+  } else {
+    $scope.employee.hobbies.push(hobby);
+  }
+  // จัดเรียง hobbies ใหม่
+  $scope.employee.hobbies.sort((a, b) => {
+    const order = ["Reading", "Photography", "Travelling"];
+    return order.indexOf(a) - order.indexOf(b);
+  });
+};
 
     $scope.updateEmployee = function() {
       const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -195,5 +233,70 @@ angular.module('myApp', [])
       });
     };
   })
-  // app/javascript/controllers/dashboard_controller.js
+.controller('DashboardController', function($scope,$http) {
+  
+      // ฟังก์ชัน initialize สำหรับโหลดข้อมูล
+     $scope.initialize = function() {
+  // ตรวจสอบว่าค่ามีการส่งจาก Rails หรือไม่
+  if (typeof totalEmployees !== 'undefined' && typeof newEmployees !== 'undefined' && typeof employeeGrowthData !== 'undefined') {
+    $scope.totalEmployees = totalEmployees;
+    $scope.newEmployees = newEmployees;
+    $scope.employeeGrowthData = employeeGrowthData;
+
+    // เตรียมข้อมูลสำหรับกราฟ
+    $scope.months = Object.keys($scope.employeeGrowthData);
+    $scope.growthData = Object.values($scope.employeeGrowthData);
+
+    // สร้างกราฟ
+    $scope.createChart();
+  } else {
+    console.error("Data is not correctly passed from Rails");
+  }
+};
+
+      // ฟังก์ชันในการสร้างกราฟ
+      $scope.createChart = function() {
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+          type: 'bar',  // หรือ 'line', 'pie', ฯลฯ
+          data: {
+            labels: $scope.months, // แท็กสำหรับแกน X
+            datasets: [{
+              label: 'Employee Growth',
+              data: $scope.growthData, // ข้อมูลสำหรับแกน Y
+              backgroundColor: 'rgba(54, 162, 235, 0.6)', // สีของกราฟ
+              borderColor: 'rgba(54, 162, 235, 1)', // สีของขอบกราฟ
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      };
+
+      $scope.viewAllEmployees = function() {
+      window.location.href = "/employees";
+    };
+    $scope.dashboard = function() {
+      window.location.href = "/dashboard";
+    };
+    $scope.logout = function() {
+      $http.delete('/logout', { 
+        headers: { 
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content') 
+        } 
+      }).then(function(response) {
+        console.log('Logged out successfully', response);
+        location.reload();  
+      }).catch(function(error) {
+        console.error('Error logging out:', error);
+        window.location.href = '/sessions/new';
+      });
+    };
+    });
 

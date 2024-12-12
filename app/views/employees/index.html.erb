@@ -20,7 +20,7 @@
           <ul class="nav flex-column">
             <li class="nav-item">
               <a class="nav-link text-black fw-bold" ng-click="dashboard()">
-                <i class="bi bi-house-door-fill"></i> index
+                <i class="bi bi-house-door-fill"></i> Dashboard
               </a>
             </li>
             <li class="nav-item">
@@ -45,7 +45,7 @@
             <thead class="bg-primary text-white text-uppercase fw-bold">
               <!-- Add Item Row -->
               <tr>
-                <th colspan="4" class="text-end bg-light">
+                <th colspan="5" class="text-end bg-light">
                   <button type="button" class="btn btn-success px-4 py-2 shadow-sm rounded-pill fw-bold" onclick="window.location.href='/employees/new'">
                     <i class="bi bi-plus-circle"></i> Add Item
                   </button>
@@ -56,14 +56,16 @@
                 <th class="text-center">#</th>
                 <th class="text-center">Name</th>
                 <th class="text-center">Hobbies</th>
+                <th class="text-center">Career</th>
                 <th class="text-center">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="employee in employees" class="border-bottom">
+              <tr ng-repeat="employee in employees | filter:{employee_name:'!benz'}" class="border-bottom">
                 <td class="text-center fw-semibold text-primary">{{ $index + 1 }}</td>
                 <td class="text-center">{{ employee.employee_name }}</td>
                 <td class="text-center">{{ employee.hobbies.join(', ') }}</td>
+                <td class="text-center">{{ employee.career }}</td>
                 <td class="text-center">
                   <div class="d-flex justify-content-center gap-2">
                     <button class="btn btn-sm btn-info text-white shadow-sm rounded-circle" ng-click="showEmployee(employee.id)">

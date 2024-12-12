@@ -56,6 +56,18 @@
 
         <br>
 
+        <!-- Input For Career -->
+        <label for="career" class="mt-3">Career:</label>
+        <select id="career" ng-model="employee.career" class="mb-2 form-control">
+          <option value="" disabled selected style="color: #a0a0a0;">Select Career</option>
+          <option value="Tech">Tech</option>
+          <option value="Influencer">Influencer</option>
+          <option value="Vtuber">Vtuber</option>
+          <!-- เพิ่มตัวเลือกที่ต้องการที่นี่ -->
+        </select>
+
+        <br>
+
         <!-- Submit Button -->
         <button type="submit" class="btn-primary border-0 rounded-pill shadow p-3">Update Employee</button>
       </form>
