@@ -7,8 +7,13 @@ angular.module('myApp', [])
     const employeeDataElement = document.getElementById("employee-data");
     const url = employeeDataElement ? employeeDataElement.dataset.employeesUrl : '';
     
+    $scope.isLoading = true;
     $http.get(url).then(function(response) {
       $scope.employees = response.data;
+      $scope.isLoading = false;
+    }).catch(function(error) {
+      console.error("Error loading data:", error);
+      $scope.isLoading = false;
     });
 
     $scope.addEmployee = function() {
@@ -47,6 +52,18 @@ angular.module('myApp', [])
           window.location.reload();
         });
       }
+    };
+    $scope.employees = [];
+    $scope.currentPage = 1; // หน้าปัจจุบัน
+    $scope.pageSize = 10;    // จำนวนรายการต่อหน้า
+
+    $scope.paginateEmployees = function() {
+      const start = ($scope.currentPage - 1) * $scope.pageSize;
+      return $scope.employees.slice(start, start + $scope.pageSize);
+    };
+
+    $scope.totalPages = function() {
+      return Math.ceil($scope.employees.length / $scope.pageSize);
     };
 
     $scope.logout = function() {
